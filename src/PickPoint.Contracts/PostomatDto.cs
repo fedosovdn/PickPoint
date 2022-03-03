@@ -1,4 +1,7 @@
-﻿namespace PickPoint.Contracts;
+﻿using System.Text.RegularExpressions;
+using FluentValidation;
+
+namespace PickPoint.Contracts;
 
 public class PostomatDto
 {
@@ -9,4 +12,15 @@ public class PostomatDto
     public string Address { get; set; }
 
     public bool IsActive { get; set; }
+}
+
+public class PostomatValidator : AbstractValidator<PostomatDto>
+{
+    public PostomatValidator()
+    {
+        string pattern = @"^\d{4}-\d{3}$";
+        Regex rx = new Regex(pattern, RegexOptions.Compiled | RegexOptions.IgnoreCase);
+
+        RuleFor(dto => dto.Number).Must(s => rx.IsMatch(s));
+    }
 }

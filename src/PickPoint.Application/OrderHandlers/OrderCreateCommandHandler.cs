@@ -25,7 +25,7 @@ public class OrderCreateCommandHandler : IRequestHandler<OrderCreateCommand>
         Order order = new()
         {
             Fio = request.OrderDto.Fio,
-            Goods = request.OrderDto.Goods?.ToList() ?? new List<string>(),
+            Goods = request.OrderDto.Goods.ToList(),
             Number = request.OrderDto.Number,
             Phone = request.OrderDto.Phone,
             Price = request.OrderDto.Price,

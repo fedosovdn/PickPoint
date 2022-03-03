@@ -1,3 +1,5 @@
+using FluentValidation.AspNetCore;
+using PickPoint.Contracts;
 using PickPoint.Module;
 using PickPoint.Persistence;
 
@@ -7,6 +9,14 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddPickPointModule(builder.Configuration);
 
 builder.Services.AddControllers();
+builder.Services.AddFluentValidation(s => 
+{ 
+    s.ImplicitlyValidateChildProperties = true;
+    s.ImplicitlyValidateRootCollectionElements = true;
+    
+    s.RegisterValidatorsFromAssemblyContaining<OrderDto>(); 
+    s.RunDefaultMvcValidationAfterFluentValidationExecutes = false;
+});
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
